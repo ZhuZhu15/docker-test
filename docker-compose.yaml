@@ -1,0 +1,51 @@
+version: '2.3'
+
+services:
+  nginx:
+    build:
+      context: .
+      dockerfile: docker/nginx.dockerfile
+    container_name: nginx
+    ports:
+      - "8098:80"
+      - "44398:443"
+    links:
+      - php
+    volumes:
+      - /home/xexe/PhpstormProjects/untitled:/var/www/docker_test
+    volumes_from:
+        - php
+  php:
+    build:
+      context: .
+      dockerfile: docker/php.dockerfile
+    container_name: php-fpm
+    links:
+      - mysql
+      - redis
+    volumes:
+      - /home/xexe/PhpstormProjects/untitled:/var/www/docker_test
+  mysql:
+    image: mysql
+    ports:
+      - "33061:3306"
+    container_name: mysql
+    volumes:
+      - ./mysql:/var/lib/mysql
+    environment:
+      - MYSQL_DATABASE=root
+      - MYSQL_PASSWORD=root
+      - MYSQL_ROOT_PASSWORD=root
+  redis:
+    image: redis
+    command: redis-server --appendonly yes
+    container_name: redis
+    ports:
+      - "6379:6379"
+    volumes:
+     - ./redis:/data
+  rabbitmq:
+    image: rabbitmq
+    container_name: rabbitmq
+
+

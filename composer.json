@@ -1,0 +1,13 @@
+{
+    "name": "xexe/untitled",
+    "authors": [
+        {
+            "name": "Sergey Zhuk",
+            "email": "pain24@mail.ru"
+        }
+    ],
+    "require": {},
+    "require-dev": {
+        "phpunit/phpunit": "^9.5"
+    }
+}
